@@ -13,10 +13,14 @@ const initialFormState = {
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case "CHANGE_INPUT":
-      return { ...state, [action.payload.name]: action.payload.value };
-    case "TOGGLE_TOPPING":
-      return { ...state, [action.payload.toppingId]: action.payload.checked };
+    case "CHANGE_INPUT": {
+      const { name, value } = action.payload;
+      return { ...state, [name]: value };
+    }
+    case "TOGGLE_TOPPING": {
+      const { toppingId, checked } = action.payload;
+      return { ...state, [toppingId]: checked };
+    }
     case "RESET_FORM":
       return initialFormState;
     default:
@@ -24,22 +28,16 @@ const reducer = (state, action) => {
   }
 };
 
-const PizzaForm = () => {
+export default function PizzaForm() {
   const [state, dispatch] = useReducer(reducer, initialFormState);
   const [createPizzaOrder, { error, isLoading }] = useCreatePizzaOrderMutation();
 
-  const onChange = (e) => {
-    dispatch({
-      type: "CHANGE_INPUT",
-      payload: { name: e.target.name, value: e.target.value },
-    });
+  const onChange = ({ target: { name, value } }) => {
+    dispatch({ type: "CHANGE_INPUT", payload: { name, value } });
   };
 
-  const toggleTopping = (e) => {
-    dispatch({
-      type: "TOGGLE_TOPPING",
-      payload: { toppingId: e.target.name, checked: e.target.checked },
-    });
+  const toggleTopping = ({ target: { name, checked } }) => {
+    dispatch({ type: "TOGGLE_TOPPING", payload: { name, checked } });
   };
 
   const resetForm = () => {
@@ -71,7 +69,7 @@ const PizzaForm = () => {
   };
 
   return (
-    <form onSubmit={onSubmit}>
+    <form id="PizzaForm" onSubmit={onSubmit}>
       <h2>Pizza Form</h2>
       {isLoading && <div className="pending">Order in progress...</div>}
       {error && <div className="failure">Order failed: {error.data.message}</div>}
@@ -127,6 +125,4 @@ const PizzaForm = () => {
       <input data-testid="submit" type="submit" disabled={!state.fullName.trim() || !state.size.trim()} />
     </form>
   );
-};
-
-export default PizzaForm;
+}

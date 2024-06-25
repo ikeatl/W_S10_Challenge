@@ -13,6 +13,7 @@ export default function OrderList() {
   const filterSize = useSelector((state) => state.orderList.filterSize);
 
   const filteredOrders = filterSize === "All" ? orders : orders?.filter((order) => order.size === filterSize);
+
   return (
     <div id="orderList">
       <h2>
@@ -28,7 +29,7 @@ export default function OrderList() {
             <div>
               <div>{order.fullName}</div>
               <div>Size: {order.size}</div>
-              <div>Toppings: {order.toppings.join(", ")}</div>
+              <div>Toppings: {order.toppings?.join(", ")}</div>
               <div className="order-buttons">
                 <button onClick={() => deletePizzaOrder(order.id)}>DELETE</button>
                 <button onClick={() => dispatch(setFullName(order.fullName))}>EDIT</button>
