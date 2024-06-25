@@ -37,7 +37,7 @@ export default function PizzaForm() {
   };
 
   const toggleTopping = ({ target: { name, checked } }) => {
-    dispatch({ type: "TOGGLE_TOPPING", payload: { name, checked } });
+    dispatch({ type: "TOGGLE_TOPPING", payload: { toppingId: name, checked } });
   };
 
   const resetForm = () => {
@@ -69,7 +69,7 @@ export default function PizzaForm() {
   };
 
   return (
-    <form id="PizzaForm" onSubmit={onSubmit}>
+    <form onSubmit={onSubmit}>
       <h2>Pizza Form</h2>
       {isLoading && <div className="pending">Order in progress...</div>}
       {error && <div className="failure">Order failed: {error.data.message}</div>}

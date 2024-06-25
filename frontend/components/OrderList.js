@@ -29,7 +29,7 @@ export default function OrderList() {
             <div>
               <div>{order.fullName}</div>
               <div>Size: {order.size}</div>
-              <div>Toppings: {order.toppings?.join(", ")}</div>
+              <div>Toppings: {order.toppings && order.toppings.length > 0 ? order.toppings.join(", ") : "No toppings"}</div>
               <div className="order-buttons">
                 <button onClick={() => deletePizzaOrder(order.id)}>DELETE</button>
                 <button onClick={() => dispatch(setFullName(order.fullName))}>EDIT</button>
