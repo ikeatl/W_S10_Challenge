@@ -30,27 +30,21 @@ export default function OrderList() {
               <p>
                 {order.customer} ordered a size {order.size} with {order.toppings ? order.toppings.length : "no"} toppings
               </p>
-              {/* <div className="order-buttons">
-                <button onClick={() => deletePizzaOrder(order.id)}>DELETE</button>
-                <button onClick={() => dispatch(setFullName(order.fullName))}>EDIT</button>
-              </div> */}
             </div>
           </li>
         )) || "No orders here! Go place some."}
       </ol>
-      {!!orders?.length && (
-        <div id="sizeFilters" data-testid="filterBtnAll">
-          Filter by size:
-          {["All", "S", "M", "L"].map((size) => {
-            const className = `button-filter${size === filterSize ? " active" : ""}`;
-            return (
-              <button data-testid={`filterBtn${size}`} className={className} key={size} onClick={() => dispatch(setFilterSize(size))}>
-                {size}
-              </button>
-            );
-          })}
-        </div>
-      )}
+      <div id="sizeFilters">
+        Filter by size:
+        {["All", "S", "M", "L"].map((size) => {
+          const className = `button-filter${size === filterSize ? " active" : ""}`;
+          return (
+            <button data-testid={`filterBtn${size}`} onClick={() => dispatch(setFilterSize(size))} className={className} key={size}>
+              {size}
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }
