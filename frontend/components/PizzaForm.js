@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useState } from "react";
 import { useCreatePizzaOrderMutation } from "../state/orderListApi";
 
 const initialFormState = {
@@ -30,6 +30,7 @@ const reducer = (state, action) => {
 
 export default function PizzaForm() {
   const [state, dispatch] = useReducer(reducer, initialFormState);
+  const [errorMessages, setErrorMessages] = useState({});
   const [createPizzaOrder, { error, isLoading }] = useCreatePizzaOrderMutation();
 
   const onChange = ({ target: { name, value } }) => {
@@ -42,6 +43,7 @@ export default function PizzaForm() {
 
   const resetForm = () => {
     dispatch({ type: "RESET_FORM" });
+    setErrorMessages({});
   };
 
   const onSubmit = (e) => {
@@ -50,7 +52,7 @@ export default function PizzaForm() {
 
     if (!fullName.trim() || !size.trim()) {
       // Handle form validation error
-      return;
+      // return;
     }
 
     const toppings = Object.keys(state)
@@ -122,7 +124,7 @@ export default function PizzaForm() {
           <br />
         </label>
       </div>
-      <input data-testid="submit" type="submit" disabled={!state.fullName.trim() || !state.size.trim()} />
+      <input data-testid="submit" type="submit" />
     </form>
   );
 }
